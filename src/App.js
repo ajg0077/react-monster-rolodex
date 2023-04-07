@@ -1,5 +1,6 @@
 import { Component } from "react";
 import "./App.css";
+import { eventWrapper } from "@testing-library/user-event/dist/utils";
 
 class App extends Component {
   constructor() {
@@ -31,7 +32,13 @@ class App extends Component {
           type="search"
           placeholder="Search Monsters"
           onChange={(event) => {
-            console.log(event.target.value);
+            const searchString = event.target.value;
+            const filteredMonsters = this.state.monsters.filter((monster) => {
+              return monster.name.toLowerCase().includes(searchString);
+            });
+            this.setState(() => {
+              return { monsters: filteredMonsters };
+            });
           }}
         />
         {this.state.monsters.map((monster) => {
