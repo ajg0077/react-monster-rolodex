@@ -1,6 +1,6 @@
 import { Component } from "react";
 import "./App.css";
-import { eventWrapper } from "@testing-library/user-event/dist/utils";
+import CardList from "./components/card-list/card-list.component";
 
 class App extends Component {
   constructor() {
@@ -15,14 +15,9 @@ class App extends Component {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((users) =>
-        this.setState(
-          () => {
-            return { monsters: users };
-          },
-          () => {
-            console.log(this.state.monsters);
-          }
-        )
+        this.setState(() => {
+          return { monsters: users };
+        })
       );
   }
   onSearchChange = (event) => {
@@ -46,9 +41,8 @@ class App extends Component {
           placeholder="Search Monsters"
           onChange={onSearchChange}
         />
-        {filteredMonsters.map((monster) => {
-          return <h1 key={monster.id}>{monster.name}</h1>;
-        })}
+
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
